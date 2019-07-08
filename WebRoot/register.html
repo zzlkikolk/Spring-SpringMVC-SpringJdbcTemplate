@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>注册</title>
+	<meta charset="UTF-8">
+	<style>
+		#main{
+			width: 450px;
+			margin: auto;
+		}
+		#result{
+			display:inline;
+		}
+	</style>
+	    <script type="text/javascript" src="js/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+  </head>
+  <script>
+ 	var text=document.getElementsByTagName("input");
+  	function onid(){
+  	var x=document.getElementById("level");
+  	var sid=document.getElementById("sid");
+  	var Cl=document.getElementById("class");
+  	var sclass=document.getElementById("sclass");
+  		if(x.value=="teacher"){
+  			Cl.style.display="none";
+  			sclass.style.display="none";
+  			sid.innerText="工号";
+  			text[0].name="tname";
+  			text[1].name="tid";
+  		}else{
+  				sclass.style.display="block";
+  				Cl.style.display="block";
+  				sid.innerText="学号";
+  				text[0].name="sname";
+  				text[1].name="sid"
+  			}
+  	}
+  </script>
+ 	<script type="text/javascript">
+ 		var xmlhttp;
+ 		function check(){
+ 			var sid=text[1].value;
+ 			var na=text[1].name;
+ 			var url="http://localhost:8080/OnlineTest/Ajax?"+na+"="+sid;
+ 			//alert(url)
+ 			xmlhttp=new XMLHttpRequest();
+ 			xmlhttp.onreadystatechange=checkResult;
+ 			xmlhttp.open("GET", url,true)
+ 			xmlhttp.send()
+ 		}
+ 		function checkResult(){
+ 			if(xmlhttp.readyState==4&&xmlhttp.status==200)
+ 				document.getElementById("result").innerHTML=xmlhttp.responseText;
+ 		}
+ 	</script>
+  <body>
+    <div id="main">
+    	<form action="register" method="post">
+    	<span class="text-primary">姓名</span><input type="text" name="sname" class="form-control">
+    	<span class="text-primary" id="sid">学号</span><input type="text" name="sid" class="form-control" onkeyup="check()"><span id="result"></span>
+    	<span class="text-primary">密码</span><input type="password" name="password" class="form-control">
+    	<span class="text-primary" id="sclass">班级</span>
+    	<select name="sClass" class="form-control" id="class">
+    			<option value="计应1班">计应1班</option>
+    			<option value="计应2班">计应2班</option>
+    			<option value="计应3班">计应3班</option>
+    			<option value="计应4班">计应4班</option>
+    		</select>
+    	<span class="text-primary">级别</span><select name="level" id="level"  class="form-control" onchange="onid()">
+    			<option value="student">学生</option>
+    			<option value="teacher">老师</option>
+    		</select>
+    		<input type="button" value="注册" class="btn btn-info">
+    	</form>
+    </div>
+  </body>
+</html>
