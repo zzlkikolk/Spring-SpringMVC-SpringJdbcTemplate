@@ -192,14 +192,4 @@ public class Handler {
     	return "onlineTest";
     }
     
-    
-
-    /**
-     *注销功能
-     */
-    @RequestMapping("/Invalidate")
-    public String Invalidate(HttpServletRequest request){
-    	request.getSession().invalidate();
-    	return "redirect:/index.jsp";
-    }
 }
